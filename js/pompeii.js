@@ -141,39 +141,43 @@ class Pompeii {
             1703, 1704, 1705,
         ];
 
-        const generateCardImageDOM = (cardId) => {
-            this.searched = [];
-            const aDOM = document.createElement('a');
-            aDOM.className = 'monster-link';
-            aDOM.href = `http://zh.tos.wikia.com/wiki/${cardId}`;
-            aDOM.setAttribute('target', '_blank');
-            aDOM.setAttribute('title', monsterNames[cardId]);
-
-            if (! this.cardExist(cardId)) {
-                aDOM.classList.add('disable');
-            }
-
-            const img = document.createElement('img');
-            img.src = `${monsterImages[cardId]}`;
-            img.width = 80;
-            img.height = 80;
-            img.setAttribute('alt', monsterNames[cardId]);
-
-            aDOM.appendChild(img);
-            fragment.appendChild(aDOM);
+        const cardHandler = (cardId) => {
+            fragment.appendChild(this.generateCardImageDOM(cardId));
         };
 
         let fragment = document.createDocumentFragment();
-        left.part1.forEach(generateCardImageDOM);
+        left.part1.forEach(cardHandler);
         this.elems.parentDOM.querySelector('.left .part.part-1').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
-        left.part2.forEach(generateCardImageDOM);
+        left.part2.forEach(cardHandler);
         this.elems.parentDOM.querySelector('.left .part.part-2').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
-        right.forEach(generateCardImageDOM);
+        right.forEach(cardHandler);
         this.elems.parentDOM.querySelector('.right').appendChild(fragment);
+    }
+
+    generateCardImageDOM(cardId) {
+        this.searched = [];
+        const aDOM = document.createElement('a');
+        aDOM.className = 'monster-link';
+        aDOM.href = `http://zh.tos.wikia.com/wiki/${cardId}`;
+        aDOM.setAttribute('target', '_blank');
+        aDOM.setAttribute('title', monsterNames[cardId]);
+
+        if (! this.cardExist(cardId)) {
+            aDOM.classList.add('disable');
+        }
+
+        const img = document.createElement('img');
+        img.src = `${monsterImages[cardId]}`;
+        img.width = 80;
+        img.height = 80;
+        img.setAttribute('alt', monsterNames[cardId]);
+
+        aDOM.appendChild(img);
+        return aDOM;
     }
 }
 
