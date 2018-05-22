@@ -1,0 +1,18 @@
+.magic-seal .left,
+.magic-seal .right,
+.magic-seal .bottom {
+    display: flex;
+    flex-wrap: wrap;
+}
+.magic-seal .left {
+    width: 400px;
+    margin: 0 15px 0 auto;
+}
+.magic-seal .right {
+    width: 400px;
+    margin: 0 auto 0 15px;
+}
+.magic-seal .bottom {
+    width: 640px;
+    margin: 30px auto 0;
+}

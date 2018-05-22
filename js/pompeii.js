@@ -106,15 +106,110 @@ class CardReviewer {
 
         let fragment = document.createDocumentFragment();
         left.part1.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.left .part.part-1').appendChild(fragment);
+        monsterContainer.querySelector('.left .part.part-1').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
         left.part2.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.left .part.part-2').appendChild(fragment);
+        monsterContainer.querySelector('.left .part.part-2').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
         right.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.right').appendChild(fragment);
+        monsterContainer.querySelector('.right').appendChild(fragment);
+    }
+
+    renderMagicSeal() {
+        const monsterContainer = document.createElement('div');
+        monsterContainer.className = 'monsters-container hide';
+        monsterContainer.classList.add('magic-seal');
+        monsterContainer.innerHTML = `
+                <h1>魔法石封印</h1>
+                <div>
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+                <div class="bottom"></div>`;
+
+        const reviewrButton = document.createElement('button');
+        reviewrButton.className = 'reviewer-switch';
+        reviewrButton.innerText = `魔法石封印`;
+        const self = this;
+        reviewrButton.addEventListener('click', (evt) => {
+            if (monsterContainer.classList.contains('hide')) {
+                // 打開
+                if (self.elems.parentDOM.classList.contains('hide')) {
+                    self.elems.parentDOM.classList.remove('hide');
+                }
+                self.elems.parentDOM.querySelectorAll('#draw-machine .monsters-container').forEach((ele) => {
+                    ele.classList.add('hide');
+                });
+                monsterContainer.classList.remove('hide');
+            } else {
+                // 關閉
+                monsterContainer.classList.add('hide');
+                self.elems.parentDOM.classList.add('hide');
+            }
+        });
+
+        this.elems.parentDOM.querySelector('#draw-machine').appendChild(monsterContainer);
+        this.elems.buttonDOM.appendChild(reviewrButton);
+
+        const magicSeal = {
+            special : [
+                1719,
+            ],
+            left : [
+                1720,1721,1722,1723,1724,
+                191,193,195,197,199,
+                201,203,205,207,209,
+                211,213,215,217,219,
+                221,223,225,227,229,
+                388,390,392,394,396,
+                413,415,417,419,421,
+                531,533,535,537,539,
+                466,468,470,472,474,
+                596,598,600,602,604,
+                716,717,718,719,720,
+                726,728,730,732,734,
+                790,792,794,796,798,
+                801,803,805,807,809,
+            ],
+            right : [
+                344,346,348,367,369,
+                375,355,371,363,359,
+                377,357,373,365,361,
+                861,863,865,867,869,
+                881,883,885,887,889,
+                946,948,950,952,954,
+                986,988,990,992,994,
+                1031,1033,1035,1037,1039,
+                1056,1058,1060,1062,1064,
+                1101,1103,1105,1107,1109,
+                1136,1138,1140,1142,1144,
+                1166,1168,1170,1172,1174,
+                1221,1223,1225,1227,1229,
+                1666,1667,1668,1669,1670,
+            ],
+            bottom : [
+                1538,1542,1546,1548,1550,1536,1540,1544,
+                1605,1607,1611,1613,1615,1601,1603,1609,
+            ],
+        };
+
+        const cardHandler = (cardId) => {
+            fragment.appendChild(this.generateCardImageDOM(cardId));
+        };
+
+        let fragment = document.createDocumentFragment();
+        magicSeal.left.forEach(cardHandler);
+        monsterContainer.querySelector('.left').appendChild(fragment);
+
+        fragment = document.createDocumentFragment();
+        magicSeal.right.forEach(cardHandler);
+        monsterContainer.querySelector('.right').appendChild(fragment);
+
+        fragment = document.createDocumentFragment();
+        magicSeal.bottom.forEach(cardHandler);
+        monsterContainer.querySelector('.bottom').appendChild(fragment);
     }
 
     parseCardInfo() {
@@ -239,6 +334,7 @@ if (isMainPage()) {
     // 如果是背包
     reviewer.parseCardInfo();
     reviewer.renderReviewerDOM();
+    reviewer.renderMagicSeal();
     reviewer.renderAncientCoinSeal();
 }
 
