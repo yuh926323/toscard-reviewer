@@ -15,16 +15,17 @@ class CardReviewer {
         parentDOM.className = 'reviewer-container hide';
         parentDOM.innerHTML = `<div class="reviewr-mask"></div>
             <div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
-            <div class="monsters-container">
-            </div>
             <div class="background-mask"></div>
         </div>`;
 
-        this.handleClose = (evt) => {
-            parentDOM.classList.toggle('hide');
+        const handleClose = (evt) => {
+            parentDOM.classList.add('hide');
+            parentDOM.querySelectorAll('#draw-machine .monsters-container').forEach((ele) => {
+                ele.classList.add('hide');
+            });
         };
 
-        const reviewerMask = parentDOM.childNodes[0].addEventListener('click', this.handleClose);
+        const reviewerMask = parentDOM.childNodes[0].addEventListener('click', handleClose);
 
         document.body.appendChild(buttonDOM);
         document.body.appendChild(parentDOM);
@@ -33,7 +34,8 @@ class CardReviewer {
     }
 
     renderAncientCoinSeal() {
-        const monsterContainer = this.elems.parentDOM.querySelector('.monsters-container');
+        const monsterContainer = document.createElement('div');
+        monsterContainer.className = 'monsters-container hide';
         monsterContainer.classList.add('ancient-coin-seal');
         monsterContainer.innerHTML = `
                 <h1>古幣封印</h1>
@@ -51,8 +53,25 @@ class CardReviewer {
         const reviewrButton = document.createElement('button');
         reviewrButton.className = 'reviewer-switch';
         reviewrButton.innerText = `古幣封印`;
-        reviewrButton.addEventListener('click', this.handleClose);
+        const self = this;
+        reviewrButton.addEventListener('click', (evt) => {
+            if (monsterContainer.classList.contains('hide')) {
+                // 打開
+                if (self.elems.parentDOM.classList.contains('hide')) {
+                    self.elems.parentDOM.classList.remove('hide');
+                }
+                self.elems.parentDOM.querySelectorAll('#draw-machine .monsters-container').forEach((ele) => {
+                    ele.classList.add('hide');
+                });
+                monsterContainer.classList.remove('hide');
+            } else {
+                // 關閉
+                monsterContainer.classList.add('hide');
+                self.elems.parentDOM.classList.add('hide');
+            }
+        });
 
+        this.elems.parentDOM.querySelector('#draw-machine').appendChild(monsterContainer);
         this.elems.buttonDOM.appendChild(reviewrButton);
 
         const left = {

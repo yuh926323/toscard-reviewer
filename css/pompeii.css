@@ -60,6 +60,12 @@ body {
     z-index: 2;
     width: 100%;
     color: #fff;
+    transition: .4s linear;
+    transition-property: opacity, visibility;
+}
+.monsters-container.hide {
+    visibility: hidden;
+    opacity: 0;
 }
 .monsters-container h1 {
     margin: 1.5rem 0;
