@@ -83,13 +83,19 @@ a.monster-link.disable::before {
     height: 100%;
     content: '';
 }
-button.reviewer-switch {
+
+.reviewer-switch-container {
     position: absolute;
     z-index: 1;
     right: 30px;
     bottom: 60px;
+    display: flex;
+    flex-flow: column;
+}
+button.reviewer-switch {
     height: 100px;
     width: 100px;
+    margin: 25px 0;
     padding: 20px;
     box-shadow: 0 0 10px 5px #c19756;
     font-size: 25px;
@@ -97,7 +103,7 @@ button.reviewer-switch {
     line-height: 25px;
     background-color: #c19756;
     border: none;
-    outline: none;
+    outline: none !important;
     border-radius: 100px;
     transition: .5s ease;
 }

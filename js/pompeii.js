@@ -8,6 +8,9 @@ class CardReviewer {
 
     renderReviewerDOM() {
         // create reviewer-container & button
+        const buttonDOM = document.createElement('div');
+        buttonDOM.className = 'reviewer-switch-container';
+
         const parentDOM = document.createElement('div');
         parentDOM.className = 'reviewer-container hide';
         parentDOM.innerHTML = `<div class="reviewr-mask"></div>
@@ -23,7 +26,9 @@ class CardReviewer {
 
         const reviewerMask = parentDOM.childNodes[0].addEventListener('click', this.handleClose);
 
+        document.body.appendChild(buttonDOM);
         document.body.appendChild(parentDOM);
+        this.elems.buttonDOM = buttonDOM;
         this.elems.parentDOM = parentDOM;
     }
 
@@ -48,7 +53,7 @@ class CardReviewer {
         reviewrButton.innerText = `古幣封印`;
         reviewrButton.addEventListener('click', this.handleClose);
 
-        document.body.appendChild(reviewrButton);
+        this.elems.buttonDOM.appendChild(reviewrButton);
 
         const left = {
             part1 : [
