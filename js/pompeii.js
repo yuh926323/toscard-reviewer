@@ -342,7 +342,6 @@ if (isMainPage()) {
     reviewer.renderReviewerDOM();
     reviewer.renderMagicSeal();
     reviewer.renderAncientCoinSeal();
-}
 
 const drawMachine = document.querySelector('#draw-machine'),
       reviewerMask = document.querySelector('.reviewr-mask'),
@@ -369,3 +368,4 @@ drawMachine.querySelectorAll('.monsters-container').forEach((ele) => {
         }
     });
 });
+}
