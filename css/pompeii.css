@@ -38,13 +38,13 @@ body {
 }
 @keyframes SideBorder {
     0% {
-        box-shadow: 0 0 20px 5px darkgoldenrod;
+        box-shadow: 0 0 20px 5px #444;
     }
     50% {
-        box-shadow: 0 0 20px 5px gold;
+        box-shadow: 0 0 20px 5px #AAA;
     }
     100% {
-        box-shadow: 0 0 20px 5px darkgoldenrod;
+        box-shadow: 0 0 20px 5px #444;
     }
 }
 
@@ -91,10 +91,10 @@ a.monster-link.disable::before {
 }
 
 .reviewer-switch-container {
-    position: absolute;
+    position: fixed;
     z-index: 1;
-    right: 30px;
-    bottom: 60px;
+    top: 30px;
+    right: 60px;
     display: flex;
     flex-flow: column;
 }
@@ -111,7 +111,7 @@ button.reviewer-switch {
     border: none;
     outline: none !important;
     border-radius: 100px;
-    transition: .5s ease;
+    transition: .3s ease;
 }
 button.reviewer-switch:hover {
     font-size: 30px;
