@@ -22,6 +22,23 @@ class CardReviewer {
         parentDOM.innerHTML = `<div class="reviewr-mask"></div>
             <div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
             <div class="monsters-container">
+            </div>
+            <div class="background-mask"></div>
+        </div>`;
+
+        this.handleClose = (evt) => {
+            parentDOM.classList.toggle('hide');
+        };
+
+        const reviewerMask = parentDOM.childNodes[0].addEventListener('click', this.handleClose);
+
+        document.body.appendChild(parentDOM);
+        this.elems.parentDOM = parentDOM;
+    }
+
+    renderAncientCoinSeal() {
+        const monsterContainer = this.elems.parentDOM.querySelector('.monsters-container');
+        monsterContainer.innerHTML = `
                 <h1>古幣封印</h1>
                 <div>
                     <div class="left">
@@ -32,26 +49,56 @@ class CardReviewer {
                         </div>
                     </div>
                     <div class="right"></div>
-                </div>
-            </div>
-            <div class="background-mask"></div>
-        </div>`;
-
-        const handleClose = (evt) => {
-            parentDOM.classList.toggle('hide');
-        };
-
-        const reviewerMask = parentDOM.childNodes[0].addEventListener('click', handleClose);
+                </div>`;
 
         const reviewrButton = document.createElement('button');
         reviewrButton.id = 'reviewer-switch';
-        reviewrButton.innerText = `查看卡匣`;
-        reviewrButton.addEventListener('click', handleClose);
+        reviewrButton.innerText = `古幣封印`;
+        reviewrButton.addEventListener('click', this.handleClose);
 
         document.body.appendChild(reviewrButton);
-        document.body.appendChild(parentDOM);
-        this.elems.parentDOM = parentDOM;
-        this.elems.reviewrButton = reviewrButton;
+
+        const left = {
+            part1 : [
+                1189, 1190, 1719,
+                1626, 1439, 1440,
+            ],
+            part2 : [
+                221, 223, 225 ,227 ,229,
+                1101, 1103, 1105, 1107, 1109,
+                1136, 1138, 1140, 1142, 1144,
+                1166, 1168, 1170, 1172, 1174,
+                1221, 1223, 1225, 1227, 1229,
+            ],
+        };
+        const right = [
+            1236, 1238, 1244,
+            1276, 1278, 1290,
+            1426, 1428, 1430,
+            1452, 1454, 1460,
+            1473, 1475, 1477,
+            1536, 1540, 1544,
+            1601, 1603, 1609,
+            1638, 1642, 1644,
+            1671, 1673, 1679,
+            1703, 1704, 1705,
+        ];
+
+        const cardHandler = (cardId) => {
+            fragment.appendChild(this.generateCardImageDOM(cardId));
+        };
+
+        let fragment = document.createDocumentFragment();
+        left.part1.forEach(cardHandler);
+        this.elems.parentDOM.querySelector('.left .part.part-1').appendChild(fragment);
+
+        fragment = document.createDocumentFragment();
+        left.part2.forEach(cardHandler);
+        this.elems.parentDOM.querySelector('.left .part.part-2').appendChild(fragment);
+
+        fragment = document.createDocumentFragment();
+        right.forEach(cardHandler);
+        this.elems.parentDOM.querySelector('.right').appendChild(fragment);
     }
 
     parseCardInfo() {
@@ -112,50 +159,6 @@ class CardReviewer {
             }
         }
         return false;
-    }
-
-    generateAncientCards() {
-        const left = {
-            part1 : [
-                1189, 1190, 1719,
-                1626, 1439, 1440,
-            ],
-            part2 : [
-                221, 223, 225 ,227 ,229,
-                1101, 1103, 1105, 1107, 1109,
-                1136, 1138, 1140, 1142, 1144,
-                1166, 1168, 1170, 1172, 1174,
-                1221, 1223, 1225, 1227, 1229,
-            ],
-        };
-        const right = [
-            1236, 1238, 1244,
-            1276, 1278, 1290,
-            1426, 1428, 1430,
-            1452, 1454, 1460,
-            1473, 1475, 1477,
-            1536, 1540, 1544,
-            1601, 1603, 1609,
-            1638, 1642, 1644,
-            1671, 1673, 1679,
-            1703, 1704, 1705,
-        ];
-
-        const cardHandler = (cardId) => {
-            fragment.appendChild(this.generateCardImageDOM(cardId));
-        };
-
-        let fragment = document.createDocumentFragment();
-        left.part1.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.left .part.part-1').appendChild(fragment);
-
-        fragment = document.createDocumentFragment();
-        left.part2.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.left .part.part-2').appendChild(fragment);
-
-        fragment = document.createDocumentFragment();
-        right.forEach(cardHandler);
-        this.elems.parentDOM.querySelector('.right').appendChild(fragment);
     }
 
     generateCardImageDOM(cardId) {
@@ -219,7 +222,7 @@ if (isMainPage()) {
     guideLink.renderWarpbutton();
 } else if (isBag()) {
     // 如果是背包
-    reviewer.renderReviewerDOM();
     reviewer.parseCardInfo();
-    reviewer.generateAncientCards();
+    reviewer.renderReviewerDOM();
+    reviewer.renderAncientCoinSeal();
 }
