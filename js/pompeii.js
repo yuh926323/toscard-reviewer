@@ -1,9 +1,11 @@
+// inject css code
 const pompeiiCss = document.createElement('link');
 pompeiiCss.setAttribute('rel', 'stylesheet');
 pompeiiCss.setAttribute('type', 'stylesheet');
 pompeiiCss.setAttribute('href', chrome.extension.getURL('css/pompeii.css'));
 document.head.appendChild(pompeiiCss);
 
+// create reviewr-container & button
 const parentDOM = document.createElement('div');
 parentDOM.className = 'reviewr-container hide';
 parentDOM.innerHTML = `<div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
@@ -33,6 +35,8 @@ reviewrButton.addEventListener('click', function() {
 document.body.appendChild(reviewrButton);
 document.body.appendChild(parentDOM);
 
+// 取得背包資料，暫時想不到更好的做法
+// 只好暴力一點，用爬 script 內字串的方式來處理
 const inventory_str = eval(document.querySelector('script[type="text/javascript"]').innerText.match(/var inventory_str = (.*)/mi)[1]);
 var inventoryCardsInfo = [], inventoryCards = [];
 inventory_str.forEach(function (str, index) {
@@ -53,7 +57,7 @@ inventory_str.forEach(function (str, index) {
         skExp : parseInt(c[10]),
         normalSkillCd : parseInt(c[11]),
     });
-    
+
     inventoryCards.push(parseInt(c[1]));
 });
 
@@ -83,6 +87,13 @@ const right = [
     1703, 1704, 1705,
 ];
 
+/**
+ * cardExist 遞迴檢查卡片是否存在背包內
+ *
+ * @param cardId 卡片編號
+ * @access public
+ * @return boolean
+ */
 function cardExist(cardId) {
     if (inventoryCards.indexOf(cardId) >= 0) {
         return true;
@@ -120,18 +131,16 @@ const generateCardImageDOM = (cardId) => {
     if (! cardExist(cardId)) {
         aDOM.classList.add('disable');
     }
-    
+
     const img = document.createElement('img');
-    // img.src = `./images/png/${cardId}i.png`;
     img.src = `${monsterImages[cardId]}`;
     img.width = 80;
     img.height = 80;
     img.setAttribute('alt', monsterNames[cardId]);
 
     aDOM.appendChild(img);
-
     fragment.appendChild(aDOM);
-}
+};
 
 var fragment = document.createDocumentFragment();
 left.part1.forEach(generateCardImageDOM);
