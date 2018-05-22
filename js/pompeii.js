@@ -19,7 +19,8 @@ class Pompeii {
         // create reviewr-container & button
         const parentDOM = document.createElement('div');
         parentDOM.className = 'reviewr-container hide';
-        parentDOM.innerHTML = `<div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
+        parentDOM.innerHTML = `<div class="reviewr-mask"></div>
+            <div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
             <div class="monsters-container">
                 <h1>古幣封印</h1>
                 <div>
@@ -36,12 +37,16 @@ class Pompeii {
             <div class="background-mask"></div>
         </div>`;
 
+        const handleClose = (evt) => {
+            parentDOM.classList.toggle('hide');
+        };
+
+        const reviewerMask = parentDOM.childNodes[0].addEventListener('click', handleClose);
+
         const reviewrButton = document.createElement('button');
         reviewrButton.id = 'reviewer-switch';
         reviewrButton.innerText = `查看卡匣`;
-        reviewrButton.addEventListener('click', function() {
-            parentDOM.classList.toggle('hide');
-        });
+        reviewrButton.addEventListener('click', handleClose);
 
         document.body.appendChild(reviewrButton);
         document.body.appendChild(parentDOM);

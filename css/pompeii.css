@@ -13,8 +13,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    transition: .5s ease;
+    transition: .3s ease;
     transition-property: transform,top,opacity;
+}
+.reviewr-mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
 #draw-machine {
     position: relative;
@@ -24,6 +30,7 @@ body {
     /* background: url('../images/draw_card.jpg'); */
     background-size: cover;
     background-position:center;
+    box-shadow: 0 0 20px 5px #999;
 }
 #draw-machine .background-mask {
     position: absolute;
