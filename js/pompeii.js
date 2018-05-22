@@ -1,5 +1,10 @@
 class Pompeii {
     constructor() {
+        this.elems = {};
+        this.inventoryCardsInfo = [];
+        this.inventoryCards = [];
+        this.searched = [];
+
         this.injectCSS();
         this.renderReviewerDOM();
         this.parseCardInfo();
@@ -45,18 +50,20 @@ class Pompeii {
 
         document.body.appendChild(reviewrButton);
         document.body.appendChild(parentDOM);
+        this.elems.parentDOM = parentDOM;
+        this.elems.reviewrButton = reviewrButton;
     }
 
     parseCardInfo() {
         // 取得背包資料，暫時想不到更好的做法
         // 只好暴力一點，用爬 script 內字串的方式來處理
-        const inventory_str = eval(document.querySelector('script[type="text/javascript"]').innerText.match(/var inventory_str = (.*)/mi)[1]);
-        var inventoryCardsInfo = [], inventoryCards = [];
+        const inventory_str = eval(document.querySelector('script[type="text/javascript"]').innerText.match(/var inventory_str = (.*)/mi)[1]),
+              self = this;
         inventory_str.forEach(function (str, index) {
             // 背包編號,卡片編號,經驗值,等級,技能等級,取得時間,分解靈魂數,(不明),昇華階段,套用的SKIN編號(加上6000),技能升技百分比,技能實際CD
-            var c = str.split('|');
+            let c = str.split('|');
 
-            inventoryCardsInfo.push({
+            self.inventoryCardsInfo.push({
                 id : parseInt(c[0]),
                 cardId : parseInt(c[1]),
                 exp : parseInt(c[2]),
@@ -71,7 +78,7 @@ class Pompeii {
                 normalSkillCd : parseInt(c[11]),
             });
 
-            inventoryCards.push(parseInt(c[1]));
+            self.inventoryCards.push(parseInt(c[1]));
         });
     }
 
@@ -83,23 +90,23 @@ class Pompeii {
      * @return boolean
      */
     cardExist(cardId) {
-        if (inventoryCards.indexOf(cardId) >= 0) {
+        if (this.inventoryCards.indexOf(cardId) >= 0) {
             return true;
         }
-        if (searched.indexOf(cardId) >= 0) {
+        if (this.searched.indexOf(cardId) >= 0) {
             return false;
         }
-        searched.push(cardId);
+        this.searched.push(cardId);
         if (evoData[cardId] && evoData[cardId].length > 0) {
             for (var i = 0;i < evoData[cardId].length;i++) {
-                if (cardExist(evoData[cardId][i])) {
+                if (this.cardExist(evoData[cardId][i])) {
                     return true;
                 }
             }
         }
         if (degData[cardId] && degData[cardId].length > 0) {
             for (var i = 0;i < degData[cardId].length;i++) {
-                if (cardExist(degData[cardId][i])) {
+                if (this.cardExist(degData[cardId][i])) {
                     return true;
                 }
             }
@@ -134,16 +141,15 @@ class Pompeii {
             1703, 1704, 1705,
         ];
 
-        var searched;
         const generateCardImageDOM = (cardId) => {
-            searched = [];
+            this.searched = [];
             const aDOM = document.createElement('a');
             aDOM.className = 'monster-link';
             aDOM.href = `http://zh.tos.wikia.com/wiki/${cardId}`;
             aDOM.setAttribute('target', '_blank');
             aDOM.setAttribute('title', monsterNames[cardId]);
 
-            if (! cardExist(cardId)) {
+            if (! this.cardExist(cardId)) {
                 aDOM.classList.add('disable');
             }
 
@@ -157,17 +163,17 @@ class Pompeii {
             fragment.appendChild(aDOM);
         };
 
-        var fragment = document.createDocumentFragment();
+        let fragment = document.createDocumentFragment();
         left.part1.forEach(generateCardImageDOM);
-        document.querySelector('.left .part.part-1').appendChild(fragment);
+        this.elems.parentDOM.querySelector('.left .part.part-1').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
         left.part2.forEach(generateCardImageDOM);
-        document.querySelector('.left .part.part-2').appendChild(fragment);
+        this.elems.parentDOM.querySelector('.left .part.part-2').appendChild(fragment);
 
         fragment = document.createDocumentFragment();
         right.forEach(generateCardImageDOM);
-        document.querySelector('.right').appendChild(fragment);
+        this.elems.parentDOM.querySelector('.right').appendChild(fragment);
     }
 }
 
