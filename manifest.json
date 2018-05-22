@@ -29,7 +29,8 @@
             "js/pompeii.js"
         ],
         "css": [
-            "css/pompeii.css"
+            "css/pompeii.css",
+            "css/ancient-coin-seal.css"
         ]
     }],
     "web_accessible_resources": [

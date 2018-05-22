@@ -1,0 +1,28 @@
+.ancient-coin-seal .left {
+    width: 400px;
+    margin-left: auto;
+    text-align: center;
+}
+.ancient-coin-seal .left > .part {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.ancient-coin-seal .left .part.part-1 {
+    width: 240px;
+    margin: 0 auto 30px;
+}
+.ancient-coin-seal .left .part.part-2 {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.ancient-coin-seal .left .part.part-3 img {
+    box-shadow: 0 0 5px 2px #c7beae;
+    border-radius: 5px;
+}
+.ancient-coin-seal .right {
+    display: flex;
+    flex-wrap: wrap;
+    width: 240px;
+    margin: 0 auto;
+}

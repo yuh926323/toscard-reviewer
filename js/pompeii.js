@@ -38,6 +38,7 @@ class CardReviewer {
 
     renderAncientCoinSeal() {
         const monsterContainer = this.elems.parentDOM.querySelector('.monsters-container');
+        monsterContainer.classList.add('ancient-coin-seal');
         monsterContainer.innerHTML = `
                 <h1>古幣封印</h1>
                 <div>
