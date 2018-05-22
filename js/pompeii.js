@@ -343,29 +343,30 @@ if (isMainPage()) {
     reviewer.renderMagicSeal();
     reviewer.renderAncientCoinSeal();
 
-const drawMachine = document.querySelector('#draw-machine'),
-      reviewerMask = document.querySelector('.reviewr-mask'),
-      deviceHeight = document.body.scrollHeight;
-function resetContainerHeihgt() {
-    const container = document.querySelector('#draw-machine .monsters-container:not(.hide)'),
-          containerHeight = container ? container.scrollHeight : 0;
-          height = Math.max(containerHeight, deviceHeight) + 'px';
-    window.scrollTo(0, 0);
-    drawMachine.style.height = height;
-    reviewerMask.style.height = height;
-}
+    // TODO: 先用粗糙的方式將主程式包起來，之後要改善
+    const drawMachine = document.querySelector('#draw-machine'),
+          reviewerMask = document.querySelector('.reviewr-mask'),
+          deviceHeight = document.body.scrollHeight;
+    function resetContainerHeihgt() {
+        const container = document.querySelector('#draw-machine .monsters-container:not(.hide)'),
+              containerHeight = container ? container.scrollHeight : 0;
+              height = Math.max(containerHeight, deviceHeight) + 'px';
+        window.scrollTo(0, 0);
+        drawMachine.style.height = height;
+        reviewerMask.style.height = height;
+    }
 
-window.addEventListener('resize', resetContainerHeihgt, true);
-document.querySelectorAll('button.reviewer-switch').forEach((ele) => {
-    ele.addEventListener('click', resetContainerHeihgt);
-});
-resetContainerHeihgt();
-
-drawMachine.querySelectorAll('.monsters-container').forEach((ele) => {
-    ele.addEventListener('transitionend', function () {
-        if (ele.classList.contains('hide')) {
-            ele.style.display = 'none';
-        }
+    window.addEventListener('resize', resetContainerHeihgt, true);
+    document.querySelectorAll('button.reviewer-switch').forEach((ele) => {
+        ele.addEventListener('click', resetContainerHeihgt);
     });
-});
+    resetContainerHeihgt();
+
+    drawMachine.querySelectorAll('.monsters-container').forEach((ele) => {
+        ele.addEventListener('transitionend', function () {
+            if (ele.classList.contains('hide')) {
+                ele.style.display = 'none';
+            }
+        });
+    });
 }
