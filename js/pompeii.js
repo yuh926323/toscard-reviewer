@@ -7,9 +7,9 @@ class CardReviewer {
     }
 
     renderReviewerDOM() {
-        // create reviewr-container & button
+        // create reviewer-container & button
         const parentDOM = document.createElement('div');
-        parentDOM.className = 'reviewr-container hide';
+        parentDOM.className = 'reviewer-container hide';
         parentDOM.innerHTML = `<div class="reviewr-mask"></div>
             <div id="draw-machine" style="background-image: url('${chrome.extension.getURL('images/draw_card.jpg')}');">
             <div class="monsters-container">

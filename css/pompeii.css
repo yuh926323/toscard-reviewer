@@ -2,12 +2,12 @@ body {
     position: relative;
 }
 
-.reviewr-container.hide {
+.reviewer-container.hide {
     position: fixed;
     opacity: 0;
     top: 100%;
 }
-.reviewr-container {
+.reviewer-container {
     position: absolute;
     top: 0;
     left: 0;
