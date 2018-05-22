@@ -182,3 +182,22 @@ class Pompeii {
 }
 
 new Pompeii();
+class GuideLink {
+    constructor() {
+    }
+
+    renderWarpbutton() {
+        const player = document.querySelectorAll('.tos-player-label'),
+              name = player[0].innerText,
+              uid = player[1].innerText;
+
+        const warpButton = document.createElement('button');
+        warpButton.id = 'reviewer-switch';
+        warpButton.innerText = `前往背包`;
+        warpButton.addEventListener('click', function() {
+            location.href = `http://review.towerofsaviors.com/${uid}`;
+        });
+
+        document.body.appendChild(warpButton);
+    }
+}
