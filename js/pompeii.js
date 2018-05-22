@@ -4,11 +4,6 @@ class Pompeii {
         this.inventoryCardsInfo = [];
         this.inventoryCards = [];
         this.searched = [];
-
-        this.injectCSS();
-        this.renderReviewerDOM();
-        this.parseCardInfo();
-        this.generateAncientCards();
     }
 
     injectCSS() {
@@ -181,7 +176,6 @@ class Pompeii {
     }
 }
 
-new Pompeii();
 class GuideLink {
     constructor() {
     }
@@ -205,4 +199,16 @@ class GuideLink {
 function isMainPage(url = '') {
     const pattern = /http:\/\/review\.towerofsaviors\.com\/mainq\?([0-9a-z]+)/mi;
     return pattern.exec(url ? url : location.href);
+}
+
+const guideLink = new GuideLink(),
+      pompeii = new Pompeii();
+pompeii.injectCSS();
+
+if (isMainPage()) {
+    guideLink.renderWarpbutton();
+} else {
+    pompeii.renderReviewerDOM();
+    pompeii.parseCardInfo();
+    pompeii.generateAncientCards();
 }
