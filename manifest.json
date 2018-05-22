@@ -3,7 +3,7 @@
     "short_name": "CardReview",
     "name": "神魔之塔卡匣檢驗器",
     "description": "這個插件可以幫助你判斷你的背包已經有哪些卡片了",
-    "version": "1.0",
+    "version": "1.1",
     "permissions": [
         "activeTab"
     ],
