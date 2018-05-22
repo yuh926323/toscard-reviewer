@@ -64,6 +64,7 @@ class CardReviewer {
                     ele.classList.add('hide');
                 });
                 monsterContainer.classList.remove('hide');
+                monsterContainer.style.display = '';
             } else {
                 // 關閉
                 monsterContainer.classList.add('hide');
@@ -143,6 +144,7 @@ class CardReviewer {
                     ele.classList.add('hide');
                 });
                 monsterContainer.classList.remove('hide');
+                monsterContainer.style.display = '';
             } else {
                 // 關閉
                 monsterContainer.classList.add('hide');
@@ -355,3 +357,11 @@ document.querySelectorAll('button.reviewer-switch').forEach((ele) => {
     ele.addEventListener('click', resetContainerHeihgt);
 });
 resetContainerHeihgt();
+
+drawMachine.querySelectorAll('.monsters-container').forEach((ele) => {
+    ele.addEventListener('transitionend', function () {
+        if (ele.classList.contains('hide')) {
+            ele.style.display = 'none';
+        }
+    });
+});
