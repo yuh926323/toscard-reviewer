@@ -201,3 +201,8 @@ class GuideLink {
         document.body.appendChild(warpButton);
     }
 }
+
+function isMainPage(url = '') {
+    const pattern = /http:\/\/review\.towerofsaviors\.com\/mainq\?([0-9a-z]+)/mi;
+    return pattern.exec(url ? url : location.href);
+}
