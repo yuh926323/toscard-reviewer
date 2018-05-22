@@ -132,7 +132,7 @@ class CardReviewer {
 
         const reviewrButton = document.createElement('button');
         reviewrButton.className = 'reviewer-switch';
-        reviewrButton.innerText = `魔法石封印`;
+        reviewrButton.innerText = `一般封印`;
         const self = this;
         reviewrButton.addEventListener('click', (evt) => {
             if (monsterContainer.classList.contains('hide')) {
