@@ -342,7 +342,8 @@ const drawMachine = document.querySelector('#draw-machine'),
       reviewerMask = document.querySelector('.reviewr-mask'),
       deviceHeight = document.body.scrollHeight;
 function resetContainerHeihgt() {
-    const containerHeight = document.querySelector('#draw-machine .monsters-container').scrollHeight,
+    const container = document.querySelector('#draw-machine .monsters-container:not(.hide)'),
+          containerHeight = container ? container.scrollHeight : 0;
           height = Math.max(containerHeight, deviceHeight) + 'px';
     window.scrollTo(0, 0);
     drawMachine.style.height = height;
