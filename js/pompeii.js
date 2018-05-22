@@ -6,15 +6,6 @@ class CardReviewer {
         this.searched = [];
     }
 
-    injectCSS() {
-        // inject css code
-        const pompeiiCss = document.createElement('link');
-        pompeiiCss.setAttribute('rel', 'stylesheet');
-        pompeiiCss.setAttribute('type', 'stylesheet');
-        pompeiiCss.setAttribute('href', chrome.extension.getURL('css/pompeii.css'));
-        document.head.appendChild(pompeiiCss);
-    }
-
     renderReviewerDOM() {
         // create reviewr-container & button
         const parentDOM = document.createElement('div');
@@ -215,7 +206,6 @@ function isBag(url = '') {
 }
 
 const reviewer = new CardReviewer();
-reviewer.injectCSS();
 
 if (isMainPage()) {
     // 如果是我的主頁
