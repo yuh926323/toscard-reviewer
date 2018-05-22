@@ -306,14 +306,18 @@ class GuideLink {
               name = player[0].innerText,
               uid = player[1].innerText;
 
+        const warpContainer = document.createElement('div');
+        warpContainer.className = 'reviewer-switch-container';
+
         const warpButton = document.createElement('button');
-        warpButton.id = 'reviewer-switch';
+        warpButton.className = 'reviewer-switch';
         warpButton.innerText = `前往背包`;
         warpButton.addEventListener('click', function() {
             location.href = `http://review.towerofsaviors.com/${uid}`;
         });
 
-        document.body.appendChild(warpButton);
+        warpContainer.appendChild(warpButton);
+        document.body.appendChild(warpContainer);
     }
 }
 
