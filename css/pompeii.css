@@ -30,8 +30,24 @@ body {
     /* background: url('../images/draw_card.jpg'); */
     background-size: cover;
     background-position:center;
-    box-shadow: 0 0 20px 5px #999;
+
+    animation-name: SideBorder;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
+@keyframes SideBorder {
+    0% {
+        box-shadow: 0 0 20px 5px darkgoldenrod;
+    }
+    50% {
+        box-shadow: 0 0 20px 5px gold;
+    }
+    100% {
+        box-shadow: 0 0 20px 5px darkgoldenrod;
+    }
+}
+
 #draw-machine .background-mask {
     position: absolute;
     top: 0;
