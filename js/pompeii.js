@@ -1,10 +1,21 @@
+class Pompeii {
+    constructor() {
+        this.injectCSS();
+        this.renderReviewerDOM();
+        this.parseCardInfo();
+        this.generateAncientCards();
+    }
+
+    injectCSS() {
 // inject css code
 const pompeiiCss = document.createElement('link');
 pompeiiCss.setAttribute('rel', 'stylesheet');
 pompeiiCss.setAttribute('type', 'stylesheet');
 pompeiiCss.setAttribute('href', chrome.extension.getURL('css/pompeii.css'));
 document.head.appendChild(pompeiiCss);
+    }
 
+    renderReviewerDOM() {
 // create reviewr-container & button
 const parentDOM = document.createElement('div');
 parentDOM.className = 'reviewr-container hide';
@@ -34,7 +45,9 @@ reviewrButton.addEventListener('click', function() {
 
 document.body.appendChild(reviewrButton);
 document.body.appendChild(parentDOM);
+    }
 
+    parseCardInfo() {
 // 取得背包資料，暫時想不到更好的做法
 // 只好暴力一點，用爬 script 內字串的方式來處理
 const inventory_str = eval(document.querySelector('script[type="text/javascript"]').innerText.match(/var inventory_str = (.*)/mi)[1]);
@@ -60,7 +73,41 @@ inventory_str.forEach(function (str, index) {
 
     inventoryCards.push(parseInt(c[1]));
 });
+    }
 
+/**
+ * cardExist 遞迴檢查卡片是否存在背包內
+ *
+ * @param cardId 卡片編號
+ * @access public
+ * @return boolean
+ */
+cardExist(cardId) {
+    if (inventoryCards.indexOf(cardId) >= 0) {
+        return true;
+    }
+    if (searched.indexOf(cardId) >= 0) {
+        return false;
+    }
+    searched.push(cardId);
+    if (evoData[cardId] && evoData[cardId].length > 0) {
+        for (var i = 0;i < evoData[cardId].length;i++) {
+            if (cardExist(evoData[cardId][i])) {
+                return true;
+            }
+        }
+    }
+    if (degData[cardId] && degData[cardId].length > 0) {
+        for (var i = 0;i < degData[cardId].length;i++) {
+            if (cardExist(degData[cardId][i])) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+    generateAncientCards() {
 const left = {
     part1 : [
         1189, 1190, 1719,
@@ -86,38 +133,6 @@ const right = [
     1671, 1673, 1679,
     1703, 1704, 1705,
 ];
-
-/**
- * cardExist 遞迴檢查卡片是否存在背包內
- *
- * @param cardId 卡片編號
- * @access public
- * @return boolean
- */
-function cardExist(cardId) {
-    if (inventoryCards.indexOf(cardId) >= 0) {
-        return true;
-    }
-    if (searched.indexOf(cardId) >= 0) {
-        return false;
-    }
-    searched.push(cardId);
-    if (evoData[cardId] && evoData[cardId].length > 0) {
-        for (var i = 0;i < evoData[cardId].length;i++) {
-            if (cardExist(evoData[cardId][i])) {
-                return true;
-            }
-        }
-    }
-    if (degData[cardId] && degData[cardId].length > 0) {
-        for (var i = 0;i < degData[cardId].length;i++) {
-            if (cardExist(degData[cardId][i])) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
 var searched;
 const generateCardImageDOM = (cardId) => {
@@ -153,3 +168,7 @@ document.querySelector('.left .part.part-2').appendChild(fragment);
 fragment = document.createDocumentFragment();
 right.forEach(generateCardImageDOM);
 document.querySelector('.right').appendChild(fragment);
+    }
+}
+
+new Pompeii();
