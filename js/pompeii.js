@@ -44,7 +44,7 @@ class CardReviewer {
                 </div>`;
 
         const reviewrButton = document.createElement('button');
-        reviewrButton.id = 'reviewer-switch';
+        reviewrButton.className = 'reviewer-switch';
         reviewrButton.innerText = `古幣封印`;
         reviewrButton.addEventListener('click', this.handleClose);
 
@@ -217,3 +217,20 @@ if (isMainPage()) {
     reviewer.renderReviewerDOM();
     reviewer.renderAncientCoinSeal();
 }
+
+const drawMachine = document.querySelector('#draw-machine'),
+      reviewerMask = document.querySelector('.reviewr-mask'),
+      deviceHeight = document.body.scrollHeight;
+function resetContainerHeihgt() {
+    const containerHeight = document.querySelector('#draw-machine .monsters-container').scrollHeight,
+          height = Math.max(containerHeight, deviceHeight) + 'px';
+    window.scrollTo(0, 0);
+    drawMachine.style.height = height;
+    reviewerMask.style.height = height;
+}
+
+window.addEventListener('resize', resetContainerHeihgt, true);
+document.querySelectorAll('button.reviewer-switch').forEach((ele) => {
+    ele.addEventListener('click', resetContainerHeihgt);
+});
+resetContainerHeihgt();

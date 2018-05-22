@@ -83,7 +83,7 @@ a.monster-link.disable::before {
     height: 100%;
     content: '';
 }
-button#reviewer-switch {
+button.reviewer-switch {
     position: absolute;
     z-index: 1;
     right: 30px;
@@ -100,16 +100,15 @@ button#reviewer-switch {
     outline: none;
     border-radius: 100px;
     transition: .5s ease;
-    /* transition-property: transform; */
 }
-button#reviewer-switch:hover {
+button.reviewer-switch:hover {
     font-size: 30px;
     line-height: 30px;
     background-color: #a87d3e;
     box-shadow: 0 0 20px 15px #a87d3e;
     text-shadow: 0 0 5px #ffffff;
 }
-button#reviewer-switch:active {
+button.reviewer-switch:active {
     font-size: 30px;
     line-height: 30px;
     background-color: #826130;
