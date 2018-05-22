@@ -205,6 +205,10 @@ function isMainPage(url = '') {
     const pattern = /http:\/\/review\.towerofsaviors\.com\/mainq\?([0-9a-z]+)/mi;
     return pattern.exec(url ? url : location.href);
 }
+function isBag(url = '') {
+    const pattern = /http:\/\/review\.towerofsaviors\.com\/([0-9]+)/mi;
+    return pattern.exec(url ? url : location.href);
+}
 
 const reviewer = new CardReviewer();
 reviewer.injectCSS();
@@ -213,7 +217,7 @@ if (isMainPage()) {
     // 如果是我的主頁
     const guideLink = new GuideLink();
     guideLink.renderWarpbutton();
-} else {
+} else if (isBag()) {
     // 如果是背包
     reviewer.renderReviewerDOM();
     reviewer.parseCardInfo();
