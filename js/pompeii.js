@@ -1,4 +1,4 @@
-class Pompeii {
+class CardReviewer {
     constructor() {
         this.elems = {};
         this.inventoryCardsInfo = [];
@@ -206,14 +206,16 @@ function isMainPage(url = '') {
     return pattern.exec(url ? url : location.href);
 }
 
-const guideLink = new GuideLink(),
-      pompeii = new Pompeii();
-pompeii.injectCSS();
+const reviewer = new CardReviewer();
+reviewer.injectCSS();
 
 if (isMainPage()) {
+    // 如果是我的主頁
+    const guideLink = new GuideLink();
     guideLink.renderWarpbutton();
 } else {
-    pompeii.renderReviewerDOM();
-    pompeii.parseCardInfo();
-    pompeii.generateAncientCards();
+    // 如果是背包
+    reviewer.renderReviewerDOM();
+    reviewer.parseCardInfo();
+    reviewer.generateAncientCards();
 }
