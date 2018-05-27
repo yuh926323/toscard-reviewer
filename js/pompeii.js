@@ -214,6 +214,112 @@ class CardReviewer {
         monsterContainer.querySelector('.bottom').appendChild(fragment);
     }
 
+    renderSpecialSeal() {
+        const monsterContainer = document.createElement('div');
+        monsterContainer.className = 'monsters-container hide';
+        monsterContainer.classList.add('special-seal');
+        monsterContainer.innerHTML = `<h1>合作封印</h1><div><div class="left"></div><div class="right"></div></div>`;
+
+        const reviewrButton = document.createElement('button');
+        reviewrButton.className = 'reviewer-switch';
+        reviewrButton.innerText = `合作封印`;
+        const self = this;
+        reviewrButton.addEventListener('click', (evt) => {
+            if (monsterContainer.classList.contains('hide')) {
+                // 打開
+                if (self.elems.parentDOM.classList.contains('hide')) {
+                    self.elems.parentDOM.classList.remove('hide');
+                }
+                self.elems.parentDOM.querySelectorAll('#draw-machine .monsters-container').forEach((ele) => {
+                    ele.classList.add('hide');
+                });
+                monsterContainer.classList.remove('hide');
+                monsterContainer.style.display = '';
+            } else {
+                // 關閉
+                monsterContainer.classList.add('hide');
+                self.elems.parentDOM.classList.add('hide');
+            }
+        });
+
+        this.elems.parentDOM.querySelector('#draw-machine').appendChild(monsterContainer);
+        this.elems.buttonDOM.appendChild(reviewrButton);
+
+        const seal = {
+            // Disney Seal
+            '迪士尼(鬼魅奸佞)' : [
+                [8001,8003,8007,8009],
+                [8005,8011,8013],
+            ],
+            // Solomon Seal
+            '七十二柱魔神' : [
+                [9001,9003,9007,9009],
+                [9005,9011,9013],
+            ],
+            // Chest of Xuan-Yuan
+            '傳世神器' : [
+                [748,750,752,756,758,760,766],
+                [746,754,762,764],
+            ],
+            // Chinese Paladin Seal
+            '仙劍靈傑' : [
+                [897,901,905,909,911,913,915],
+                [891,893,895,899,903,907],
+            ],
+            // MS Hero Seal
+            '怪物彈珠 ‧ 英雄' : [
+                [1091,1092,1093,1094,1095,1096],
+                [1097],
+            ],
+            // Wheel of Fortune
+            '大富翁' : [
+                [1201,1202,1203,1204,1205],
+                [1206,1207,1208],
+            ],
+            // Pili Heavenly Stone
+            '霹靂布袋戲' : [
+                [1507,1508,1511,1512,1513],
+                [1506,1509,1510],
+            ],
+            // The Ring of Fighters
+            '拳皇' : [
+                [1571,1573,1574,1577,1578],
+                [1572,1575,1576],
+            ],
+            // Digital Hatcher
+            '粉碎狂熱' : [
+                [1727,1730,1731,1732,1733],
+                [1726,1729,1728],
+            ],
+        };
+
+        const cardHandler = (cardId, index) => {
+            sealCardContainer.appendChild(this.generateCardImageDOM(cardId));
+        };
+
+        let sealCardContainer;
+        Object.keys(seal).forEach((sealName, index, self) => {
+            let targetContainer = monsterContainer.querySelector('.left');
+            if ((index + 1) > self.length / 2) {
+                targetContainer = monsterContainer.querySelector('.right');
+            }
+            const title = document.createElement('h3');
+            title.className = `special-title`;
+            title.innerText = `${sealName}系列`;
+            targetContainer.appendChild(title);
+
+            sealCardContainer = document.createElement('div');
+            sealCardContainer.className = `special-card-container`;
+            seal[sealName][0].forEach(cardHandler);
+            targetContainer.appendChild(sealCardContainer);
+
+            sealCardContainer = document.createElement('div');
+            sealCardContainer.className = `special-card-container`;
+            seal[sealName][1].forEach(cardHandler);
+            targetContainer.appendChild(sealCardContainer);
+        });
+    }
+
     parseCardInfo() {
         // 取得背包資料，暫時想不到更好的做法
         // 只好暴力一點，用爬 script 內字串的方式來處理
@@ -342,6 +448,7 @@ if (isMainPage()) {
     reviewer.renderReviewerDOM();
     reviewer.renderMagicSeal();
     reviewer.renderAncientCoinSeal();
+    reviewer.renderSpecialSeal();
 
     // TODO: 先用粗糙的方式將主程式包起來，之後要改善
     const drawMachine = document.querySelector('#draw-machine'),
