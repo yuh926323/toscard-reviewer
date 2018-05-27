@@ -1,0 +1,34 @@
+.special-title {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgb(255, 193, 7) 0px 0px 5px;
+    margin: 1.5rem 0px;
+}
+
+.special-seal .left,
+.special-seal .right {
+    width: 50%;
+    padding: 0 40px 40px 40px;
+}
+.special-card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.special-card-container:nth-child(3n) a.monster-link {
+    animation-name: RareCard;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes RareCard {
+    0% {
+        box-shadow: 0 0 10px 1px #9999991a;
+    }
+    50% {
+        box-shadow: 0 0 10px 1px #cccccc80;
+    }
+    100% {
+        box-shadow: 0 0 10px 1px #9999991a;
+    }
+}

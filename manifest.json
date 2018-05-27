@@ -31,7 +31,8 @@
         "css": [
             "css/pompeii.css",
             "css/ancient-coin-seal.css",
-            "css/magic-stone-seal.css"
+            "css/magic-stone-seal.css",
+            "css/special-seal.css"
         ]
     }],
     "web_accessible_resources": [
